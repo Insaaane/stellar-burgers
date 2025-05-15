@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { TIngredient } from '@utils-types';
-import { getIngredientsList } from '../thunks/IngredientsThunk';
+import { getIngredientsList } from './IngredientsThunk';
+import { TResponseError } from '../util';
 
 interface IIngredientState {
-  ingredients: Array<TIngredient>;
+  ingredients: TIngredient[];
   status: {
     isLoading: boolean;
-    error: string | null;
+    error: TResponseError | null;
   };
 }
 
@@ -34,7 +35,7 @@ const ingredientsSlice = createSlice({
       })
       .addCase(getIngredientsList.rejected, (state, action) => {
         state.status.isLoading = false;
-        state.status.error = action.payload as string;
+        state.status.error = action.payload as TResponseError;
       });
   },
   selectors: {
